@@ -90,18 +90,26 @@ const AccountKit = new RNAccountKit()
 export class LoginButton extends Component {
   static propTypes = {
     type: PropTypes.string,
+    onPress: PropTypes.func,
     onLogin: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
     onCancel: PropTypes.func
   };
 
   static defaultProps = {
-    type: 'phone'
+    type: 'phone',
+    onPress: undefined,
   };
 
   onPress() {
+    const { onPress: onPressProp } = this.props
+
     const login = this.props.type.toLowerCase() == 'email' ?
       AccountKit.loginWithEmail : AccountKit.loginWithPhone
+
+    if (onPressProp instanceof Function) {
+      onPressProp()
+    }
 
     login()
       .then((data) => {

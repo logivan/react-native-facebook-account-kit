@@ -1,3 +1,7 @@
+# Logivan Notes
+
+add `onPress` props for LoginButton
+
 # react-native-facebook-account-kit
 
 A Facebook Account Kit SDK wrapper for react-native.
