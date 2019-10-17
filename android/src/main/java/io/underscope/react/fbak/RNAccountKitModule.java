@@ -5,7 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 
 import com.facebook.accountkit.AccessToken;
@@ -185,7 +185,6 @@ public class RNAccountKitModule extends ReactContextBaseJavaModule implements Ac
      *     initialAuthState             :String
      *     facebookNotificationsEnabled :Boolean
      *     readPhoneStateEnabled        :Boolean
-     *     receiveSMS                   :Boolean
      *     countryBlacklist             :String[]
      *     countryWhitelist             :String[]
      *     defaultCountry               :String
@@ -239,11 +238,8 @@ public class RNAccountKitModule extends ReactContextBaseJavaModule implements Ac
             configurationBuilder.setReadPhoneStateEnabled(readPhoneStateEnabled);
         }
 
-        boolean receiveSMS = this.options.getBoolean("receiveSMS");
-        if (receiveSMS && PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(
-                reactContext.getApplicationContext(), Manifest.permission.RECEIVE_SMS)) {
-            Log.w(REACT_CLASS, "To allow extracting code from SMS add RECEIVE_SMS permission in your app's manifest");
-        }
+        boolean setEnableInitialSmsButton = this.options.getBoolean("setEnableInitialSmsButton");
+        configurationBuilder.setEnableInitialSmsButton(setEnableInitialSmsButton);
 
         if (this.options.hasKey("countryBlacklist")) {
             String[] blacklist = formatCountryList(this.options.getArray("countryBlacklist"));
